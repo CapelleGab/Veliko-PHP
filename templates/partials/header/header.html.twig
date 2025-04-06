@@ -1,0 +1,25 @@
+<header>
+    <nav class="nav-container">
+        <a class="brand" href="{{ path('app_home') }}">Veliko</a>
+        <button class="menu-toggle" type="button" aria-label="Menu">
+            ☰
+        </button>
+        <ul class="nav-menu">
+            {% if app.user %}
+                <li>
+                    <a class="nav-link" href="{{ path('app_home') }}">Mon Profil</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ path('app_home') }}">Déconnexion</a>
+                </li>
+            {% else %}
+                <li>
+                    <a class="nav-link" href="{{ path('app_home') }}">Connexion</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ path('app_home') }}">Inscription</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
