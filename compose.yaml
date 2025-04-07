@@ -1,54 +1,44 @@
-version: '3.8'
-
 services:
-  mariadb:
-    image: mariadb:latest
-    container_name: veliko_mariadb
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: bddveliko
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+  mock-veliko-api:
+    container_name: mock-veliko-api
+    image: bfoujols/mock-veliko-api:latest
     ports:
-      - "3307:3306"
-    volumes:
-      - dbdata:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: veliko_phpmyadmin
-    restart: always
-    environment:
-      PMA_HOST: mariadb
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "8080:80"
-    depends_on:
-      - mariadb
+      - "9042:80"
   database:
-    image: 'mariadb:latest'
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: main
+    container_name: veliko-mariadb
+    image: mariadb:latest
     ports:
-      # To allow the host machine to access the ports below, modify the lines below.
-      # For example, to allow the host to connect to port 3306 on the container, you would change
-      # "3306" to "3306:3306". Where the first port is exposed to the host and the second is the container port.
-      # See https://docs.docker.com/compose/compose-file/compose-file-v3/#ports for more information.
-      - '3306'
-  bddveliko:
-    image: 'mariadb:latest'
+      - "3306:3306"
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: main
+      MYSQL_DATABASE: app_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      TZ: Europe/Paris
+    volumes:
+      - ./var/dbdata:/var/lib/mysql
+  phpmyadmin:
+    container_name: veliko-pma
+    image: phpmyadmin/phpmyadmin
     ports:
-      # To allow the host machine to access the ports below, modify the lines below.
-      # For example, to allow the host to connect to port 3306 on the container, you would change
-      # "3306" to "3306:3306". Where the first port is exposed to the host and the second is the container port.
-      # See https://docs.docker.com/compose/compose-file/compose-file-v3/#ports for more information.
-      - '3306'
-
-volumes:
-  dbdata:
+      - "8081:80"
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 1G
+      MEMORY_LIMIT: 512M
+      MAX_EXECUTION_TIME: 0
+    restart: always
+    links:
+      - database
+    depends_on:
+      - database
+  mailer:
+    container_name: veliko-mailer
+    image: axllent/mailpit
+    ports:
+      - "1025"
+      - "8025:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1

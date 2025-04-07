@@ -1,157 +1,21 @@
 #map {
   width: 80%;
-  height: 500px;
+  height: 700px;
   border-radius: 0 10px 10px 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 }
-#data {
-  width: 20%;
-  height: 500px;
-  background-color: white;
-  border-radius: 10px 0 0 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  display: flex;
-  flex-direction: column;
-  padding: 20px 10px;
-}
-
-#lblLoc {
-  font-size: 13px;
-  font-family: Arial, sans-serif;
-}
-
-#inpLoc {
-  width: 100%;
-  margin: 2px 0 10px 0;
-  padding: 4px 4px;
-  border-radius: 5px;
-  border: 1px solid #2d3748;
-
-}
 
 .full {
+  margin-top: 50px;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 .container {
   width: 80%;
-  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Variables de couleurs */
-:root {
-  --primary-color: #38a169; /* Vert émeraude */
-  --secondary-color: #68d391; /* Vert menthe */
-  --accent-color: #48bb78; /* Vert forêt */
-  --light-color: #f0fff4; /* Blanc verdâtre très clair */
-  --text-color: #2d3748; /* Gris foncé pour le texte */
-  --white: #ffffff;
-}
-
-/* Style du bouton de recherche de localisation */
-button[type="submit"] {
-  background-color: var(--primary-color);
-  color: var(--white);
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button[type="submit"]:hover {
-  background-color: var(--accent-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
-
-button[type="submit"]:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-button[type="submit"]:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.4);
-}
-
-/* Styles pour le conteneur de la carte */
-.map-container {
-  width: 100%;
-  height: 500px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 2rem 0;
-}
-
-/* Styles pour le formulaire de recherche */
-.search-form {
-  margin-bottom: 1rem;
-  display: flex;
-  gap: 0.5rem;
-}
-
-.search-input {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.2);
-}
-
-/* Styles pour les contrôles de la carte */
-.map-controls {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1000;
-  background-color: var(--white);
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem;
-}
-
-/* Styles pour les popups de la carte */
-.leaflet-popup-content {
-  font-family: Arial, sans-serif;
-  color: var(--text-color);
-}
-
-.leaflet-popup-content-wrapper {
-  border-radius: 4px;
-}
-
-/* Styles responsifs */
-@media (max-width: 768px) {
-  .map-container {
-    height: 350px;
-  }
-
-  .search-form {
-    flex-direction: column;
-  }
-
-  button[type="submit"] {
-    width: 100%;
-  }
-}

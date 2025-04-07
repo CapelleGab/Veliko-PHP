@@ -1,3 +1,11 @@
+:root {
+    --primary-color: #38a169; /* Vert émeraude */
+    --secondary-color: #68d391; /* Vert menthe */
+    --accent-color: #48bb78; /* Vert forêt */
+    --light-color: #f0fff4; /* Blanc verdâtre très clair */
+    --text-color: #2d3748; /* Gris foncé pour le texte */
+    --white: #ffffff;
+}
 
 body {
     background-color: #e8e8e8;
