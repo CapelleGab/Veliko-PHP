@@ -10,14 +10,14 @@
                     <a class="nav-link" href="{{ path('app_home') }}">Mon Profil</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="{{ path('app_home') }}">Déconnexion</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                 </li>
             {% else %}
                 <li>
-                    <a class="nav-link" href="{{ path('app_home') }}">Connexion</a>
+                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="{{ path('app_home') }}">Inscription</a>
+                    <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
                 </li>
             {% endif %}
         </ul>
