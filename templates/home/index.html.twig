@@ -2,9 +2,18 @@
 
 {% block title %}Veliko - Acceuil{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('map') }}
+{% endblock %}
+
 {% block body %}
 
     {% include 'partials/map/map.html.twig' %}
 
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('map') }}
+    {% endblock %}
 {% endblock %}
 
