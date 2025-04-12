@@ -93,7 +93,13 @@ npm install
 
 ---
 
-### 6. Start Symfony server / Lancer le serveur
+### 6. Load Migrations
+
+```bash
+symfony console d:m:m
+```
+
+### 7. Start Symfony server / Lancer le serveur
 
 ```bash
 symfony serve
@@ -101,7 +107,7 @@ symfony serve
 
 ---
 
-### 7. Assets build (Webpack Encore)
+### 8. Assets build (Webpack Encore)
 
 - Dev:
 
@@ -119,7 +125,7 @@ npm run build
 
 ## 📌 Favoris / Favorites
 
-- 🇫🇷 Les favoris sont enregistrés en local (localStorage).  
+- 🇫🇷 Les favoris sont enregistrés en local (localStorage).
 - 🇬🇧 Favorites are saved locally (localStorage).
 
 👉 Une gestion serveur peut être envisagée par la suite.  
