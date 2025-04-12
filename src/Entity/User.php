@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -32,6 +34,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Station>
+     */
+    #[ORM\ManyToMany(targetEntity: Station::class)]
+    private Collection $favoriteStations;
+
+    public function __construct()
+    {
+        $this->favoriteStations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,5 +119,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Station>
+     */
+    public function getFavoriteStations(): Collection
+    {
+        return $this->favoriteStations;
+    }
+
+    public function addFavoriteStation(Station $favoriteStation): static
+    {
+        if (!$this->favoriteStations->contains($favoriteStation)) {
+            $this->favoriteStations->add($favoriteStation);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteStation(Station $favoriteStation): static
+    {
+        $this->favoriteStations->removeElement($favoriteStation);
+
+        return $this;
     }
 }
