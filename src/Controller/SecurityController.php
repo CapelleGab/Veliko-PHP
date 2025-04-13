@@ -41,6 +41,8 @@ class SecurityController extends AbstractController
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
             $user->setIsVerified(false);
             $user->setRoles(['ROLE_USER']);
+            $user->setCreatedAt(new \DateTimeImmutable());
+            $user->setUpdatedAt($user->getCreatedAt());
 
             $entityManager->persist($user);
             $entityManager->flush();
