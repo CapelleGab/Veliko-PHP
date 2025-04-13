@@ -13,6 +13,13 @@
 
     <body style="height: 100vh">
         {% include "partials/header/header.html.twig" %}
+        
+        {% for messages in app.flashes %}
+            {% for message in messages %}
+                <p>{{ message|raw }}</p>
+            {% endfor %}
+        {% endfor %}
+
         <main>
             {% block body %}{% endblock %}
         </main>
