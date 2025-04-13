@@ -3,25 +3,7 @@
 [![Symfony](https://img.shields.io/badge/Symfony-7.0-000000?logo=symfony&logoColor=white)](https://symfony.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**🇫🇷 Français | 🇬🇧 English**
-
----
-
-## 🇫🇷 Présentation
-
-**Veliko** est une application web développée avec **Symfony 7**, permettant de consulter en temps réel les informations des stations de vélos en libre-service (type Vélib’).
-
-### Fonctionnalités :
-
-- Nombre maximal de vélos qu'une station peut accueillir.
-- Nombre de vélos **mécaniques** disponibles.
-- Nombre de vélos **électriques** disponibles.
-- Ajouter des **stations en favoris** pour un accès rapide.
-- Affichage **interactif sur une carte** grâce à Leaflet.js.
-
----
-
-## 🇬🇧 Overview
+## Overview
 
 **Veliko** is a web application built with **Symfony 7** to view real-time information about bike-sharing stations (like Vélib’).
 
@@ -38,31 +20,30 @@
 ## 🧰 Tech Stack / Stack technique
 
 - **Symfony 7**
-- **Leaflet.js** (map display / affichage de carte)
-- **Vélib' API** (real-time data / données en temps réel)
-- **Mock Vélib API** (static dev data / données de test)
+- **Leaflet.js** (map display)
+- **Vélib' API** (real-time data)
+- **Mock Vélib API** (static dev data)
 - **Webpack Encore** (assets management)
 - **Node.js / npm** (front-end)
 
 ---
 
-## ⚙️ Setup / Installation
+## ⚙️ Setup
 
-### 1. Clone / Cloner le projet
+### 1. Clone
 
 ```bash
 git clone https://github.com/your-username/veliko.git
 cd veliko
 ```
 
-### 2. Env file / Fichier `.env`
+### 2. Env file
 
 ```bash
 cp .env.example .env
 ```
 
-> 🇫🇷 Modifiez les variables nécessaires (clé API, DB, etc.)  
-> 🇬🇧 Edit required variables (API key, DB, etc.)
+> Edit required variables (API key, DB, etc.)
 
 ---
 
@@ -72,12 +53,11 @@ cp .env.example .env
 docker compose up -d
 ```
 
-Un fichier `compose.yaml` est fourni avec tous les services nécessaires.  
 The provided `compose.yaml` file contains all needed services.
 
 ---
 
-### 4. PHP dependencies / Dépendances PHP
+### 4. PHP dependencies
 
 ```bash
 composer install
@@ -85,7 +65,7 @@ composer install
 
 ---
 
-### 5. Front-end dependencies / Dépendances front-end
+### 5. Front-end dependencies
 
 ```bash
 npm install
@@ -99,7 +79,7 @@ npm install
 symfony console d:m:m
 ```
 
-### 7. Start Symfony server / Lancer le serveur
+### 7. Start Symfony server
 
 ```bash
 symfony serve
@@ -123,23 +103,12 @@ npm run build
 
 ---
 
-## 📌 Favoris / Favorites
-
-- 🇫🇷 Les favoris sont enregistrés en local (localStorage).
-- 🇬🇧 Favorites are saved locally (localStorage).
-
-👉 Une gestion serveur peut être envisagée par la suite.  
-👉 Server-side storage may be implemented later.
-
----
-
 ## 🧑‍💻 Auteur / Author
 
-Développé par **Gabin** – Projet étudiant / Student project.
+Développé par **Gabin** – Student project.
 
 ---
 
 ## 📄 Licence / License
 
-Ce projet est sous licence [MIT](LICENSE).  
 This project is licensed under the [MIT License](LICENSE).
