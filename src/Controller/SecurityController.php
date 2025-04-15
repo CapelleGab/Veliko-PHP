@@ -94,6 +94,7 @@ class SecurityController extends AbstractController
             // On verifie qu'on a bien un user et qu'il n'est pas déjà vérifié
             if($user && !$user->isVerified()) {
                 $user->setIsVerified(true);
+                $user->setRoles(['ROLE_USER', 'ROLE_VERIFIED']);
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash('success', 'Votre compte a bien été vérifié !');

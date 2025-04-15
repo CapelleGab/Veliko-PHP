@@ -1,0 +1,46 @@
+<div class="sidebar">
+    <div class="tab">
+        <a href="{{ path("app_profil") }}" class="tablinks">My informations</a>
+        <a href="{{ path("app_favorites") }}" class="tablinks">My Favorite</a>
+    </div>
+</div>
+
+<style>
+.sidebar {
+    height: 87.8vh;
+    width: 150px;
+    padding: 15px;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.tab a {
+    background-color: inherit;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+    color: black;
+    transition: background-color 0.3s;
+}
+
+.tab a:hover {
+    background-color: #ddd;
+}
+
+.tab a.active {
+    background-color: #007bff;
+    color: white;
+}
+</style>
+

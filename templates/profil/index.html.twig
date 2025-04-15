@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Veliko - My Account!{% endblock %}
+
+{% block body %}
+
+    <style>
+        .form-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            max-width: 500px; 
+            margin: 50px auto; 
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            margin-bottom: 1rem; 
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 18px 14px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-sizing: border-box;
+            pointer-events: none; /* Désactiver les événements de pointeur par défaut */
+            background-color: #f9f9f9; /* Couleur de fond désactivée */
+        }
+
+        .input-container input.active {
+            pointer-events: auto; /* Activer les événements de pointeur */
+            background-color: white; /* Couleur de fond active */
+        }
+
+        .modifier-button {
+            position: absolute; 
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);    
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modifier-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .submit-button {
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; 
+            margin-top: 1rem;
+        }
+    </style>
+
+    <div style="display: flex; justify-content: space-between">
+        {% include 'partials/sidebar/sidebar.html.twig' %}
+
+        <div style="flex: 1; margin-right: 1rem;">
+            <form class="form-container" method="POST" action="{{ path('app_update') }}">
+{#                <input type="hidden" name="_method" value="PUT">#}
+                <div style="display: flex; flex-direction: column; gap: 1rem">
+                    <h2>My information</h2>
+
+                    <div class="input-container">
+                        <input type="text" name="username" value="{{ user.username }}" />
+                        <button type="button" class="modifier-button" onclick="makeEditable(this)">Modifier</button>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="text" name="firstname" value="{{ user.firstname }}" />
+                        <button type="button" class="modifier-button" onclick="makeEditable(this)">Modifier</button>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="text" name="lastname" value="{{ user.lastname }}" />
+                        <button type="button" class="modifier-button" onclick="makeEditable(this)">Modifier</button>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="email" name="email" value="{{ user.email }}" />
+                        <button type="button" class="modifier-button" onclick="makeEditable(this)">Modifier</button>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="tel" name="phonenumber" value="{{ user.phonenumber }}" />
+                        <button type="button" class="modifier-button" onclick="makeEditable(this)">Modifier</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-button">Soumettre</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function makeEditable(button) {
+            // Récupérer le conteneur parent de l'input
+            const inputContainer = button.parentElement;
+            // Récupérer l'input
+            const input = inputContainer.querySelector('input');
+            // Activer ou désactiver l'input
+            input.classList.toggle('active');
+            // Si l'input est actif, le focus
+            if (input.classList.contains('active')) {
+                input.focus();
+            }
+        }
+    </script>
+
+{% endblock %}
