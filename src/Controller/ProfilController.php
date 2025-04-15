@@ -16,7 +16,7 @@ final class ProfilController extends AbstractController
 {
     #[Route('/profil', name: 'app_profil')]
     #[IsGranted('ROLE_USER')]
-    public function index(Request $request, UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository): Response
     {
         $identifier = $this->getUser()->getUserIdentifier();
         $user = $userRepository->findOneBy(['email' => $identifier]);
@@ -49,10 +49,16 @@ final class ProfilController extends AbstractController
     
     #[Route('/profil/favorites', name: 'app_favorites')]
     #[IsGranted('ROLE_USER')]
-    public function favorites(): Response
+    public function favorites(UserRepository $userRepository): Response
     {
+        $identifier = $this->getUser()->getUserIdentifier();
+        $user = $userRepository->findOneBy(['email' => $identifier]);
+
+        $stations = $user->getFavoriteStations()->toArray();
+
         return $this->render('profil/favorites.html.twig', [
             'controller_name' => 'ProfilController',
+            'stations' => $stations,
         ]);
     }
 }
