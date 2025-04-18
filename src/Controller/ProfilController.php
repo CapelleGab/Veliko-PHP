@@ -48,7 +48,7 @@ final class ProfilController extends AbstractController
 
     #[Route('/profil/delete', name: 'app_delete', methods: ['DELETE'])]
     #[IsGranted('ROLE_USER')]
-    public function deleteAccount(Request $request, UserRepository $userRepository, EntityManagerInterface $em): JsonResponse
+    public function delete(Request $request, UserRepository $userRepository, EntityManagerInterface $em): JsonResponse
     {
         try {
             $identifier = $this->getUser()->getUserIdentifier();
