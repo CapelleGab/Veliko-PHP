@@ -7,6 +7,7 @@ use App\Form\UserDataFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,9 +22,7 @@ final class ProfilController extends AbstractController
         $identifier = $this->getUser()->getUserIdentifier();
         $user = $userRepository->findOneBy(['email' => $identifier]);
 
-
-
-        return $this->render('profil/index.html.twig', [
+        return $this->render('profil/informations.html.twig', [
             'user' => $user
         ]);
     }
@@ -34,7 +33,7 @@ final class ProfilController extends AbstractController
     {
         $identifier = $this->getUser()->getUserIdentifier();
         $user = $userRepository->findOneBy(['email' => $identifier]);
-        
+
         $user->setUsername($request->request->get('username'));
         $user->setFirstname($request->request->get('firstname'));
         $user->setLastname($request->request->get('lastname'));
@@ -46,7 +45,40 @@ final class ProfilController extends AbstractController
 
         return $this->redirectToRoute('app_profil');
     }
-    
+
+    #[Route('/profil/delete', name: 'app_delete', methods: ['DELETE'])]
+    #[IsGranted('ROLE_USER')]
+    public function deleteAccount(Request $request, UserRepository $userRepository, EntityManagerInterface $em): JsonResponse
+    {
+        try {
+            $identifier = $this->getUser()->getUserIdentifier();
+            $user = $userRepository->findOneBy(['email' => $identifier]);
+
+            if (!$user) {
+                return new JsonResponse([
+                    'success' => false,
+                    'message' => 'Utilisateur non trouvé'
+                ]);
+            }
+
+            // Supprimer les références à l'utilisateur dans SecurityToken
+            $this->container->get('security.token_storage')->setToken(null);
+            $request->getSession()->invalidate();
+
+            $em->remove($user);
+            $em->flush();
+            $this->addFlash('Success', "Votre compte à bien été supprimer");
+            return new JsonResponse([
+                'success' => true
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Une erreur est survenue lors de la suppression: ' . $e->getMessage()
+            ]);
+        }
+    }
+
     #[Route('/profil/favorites', name: 'app_favorites')]
     #[IsGranted('ROLE_USER')]
     public function favorites(UserRepository $userRepository): Response
@@ -57,7 +89,6 @@ final class ProfilController extends AbstractController
         $stations = $user->getFavoriteStations()->toArray();
 
         return $this->render('profil/favorites.html.twig', [
-            'controller_name' => 'ProfilController',
             'stations' => $stations,
         ]);
     }

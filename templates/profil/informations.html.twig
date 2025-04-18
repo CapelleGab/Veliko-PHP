@@ -63,6 +63,76 @@
             width: 100%; 
             margin-top: 1rem;
         }
+
+        #deleteAccount {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #deleteAccount:hover {
+            background-color: #c82333;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-cancel {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-confirm {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-confirm:hover {
+            background-color: #c82333;
+        }
     </style>
 
     <div style="display: flex; justify-content: space-between">
@@ -70,7 +140,6 @@
 
         <div style="flex: 1; margin-right: 1rem;">
             <form class="form-container" method="POST" action="{{ path('app_update') }}">
-{#                <input type="hidden" name="_method" value="PUT">#}
                 <div style="display: flex; flex-direction: column; gap: 1rem">
                     <h2>My informations</h2>
 
@@ -101,21 +170,72 @@
                 </div>
                 <button type="submit" class="submit-button">Soumettre</button>
             </form>
+
+            <button id="deleteAccount" onclick="openDeleteModal()">Supprimer mon compte</button>
+        </div>
+    </div>
+
+    <!-- Modal for account deletion confirmation -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3>Confirmation de suppression</h3>
+            <p>Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.</p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeDeleteModal()">Annuler</button>
+                <button class="btn-confirm" onclick="deleteAccount()">Confirmer</button>
+            </div>
         </div>
     </div>
 
     <script>
-        function makeEditable(button) {
-            // Récupérer le conteneur parent de l'input
+        const makeEditable = (button) => {
             const inputContainer = button.parentElement;
-            // Récupérer l'input
             const input = inputContainer.querySelector('input');
-            // Activer ou désactiver l'input
             input.classList.toggle('active');
-            // Si l'input est actif, le focus
             if (input.classList.contains('active')) {
                 input.focus();
             }
+        }
+
+        // Modal management
+        const openDeleteModal = () => {
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+
+        const closeDeleteModal = () => {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        // Delete account
+        const deleteAccount = () => {
+            fetch('{{ path('app_delete') }}', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur serveur: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Rediriger vers la page de login
+                    window.location.href = '{{ path('app_login') }}';
+                } else {
+                    alert('Erreur lors de la suppression du compte: ' + data.message);
+                    closeDeleteModal();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Une erreur est survenue. Veuillez réessayer plus tard.');
+                closeDeleteModal();
+            });
         }
     </script>
 

@@ -83,15 +83,10 @@ class SecurityController extends AbstractController
     public function verifUser(
         string $token, JWTService $jwt, UserRepository $user, EntityManagerInterface $em): Response
     {
-        // Verifier si le token est valide (cohérent, pas expiré, signature valide)
         if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))) {
-            // Le token est valide, on peut l'utiliser
             $payload = $jwt->getPayload($token);
-
-            // On récupère l'utilisateur correspondant à l'ID dans le payload
             $user = $user->find($payload['userID']);
 
-            // On verifie qu'on a bien un user et qu'il n'est pas déjà vérifié
             if($user && !$user->isVerified()) {
                 $user->setIsVerified(true);
                 $user->setRoles(['ROLE_USER', 'ROLE_VERIFIED']);
